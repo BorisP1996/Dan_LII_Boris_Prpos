@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Zadatak_52Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblCake">
+          <Key>
+            <PropertyRef Name="CakeID" />
+          </Key>
+          <Property Name="CakeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CakeName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Grown" Type="bit" />
+          <Property Name="Kids" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblCakeList">
+          <Key>
+            <PropertyRef Name="CakeListID" />
+          </Key>
+          <Property Name="CakeListID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LjubavnoGnezdo" Type="int" />
+          <Property Name="Lincer" Type="int" />
+          <Property Name="Cheese" Type="int" />
+          <Property Name="Dobos" Type="int" />
+          <Property Name="Bomba" Type="int" />
+          <Property Name="Kinder" Type="int" />
+        </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="CakeID" />
+          </Key>
+          <Property Name="CakeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TotalPrice" Type="float" Nullable="false" />
+          <Property Name="OrderDate" Type="date" Nullable="false" />
+          <Property Name="NumberOfCakes" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="CakeListID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fullname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="NumberOfOrders" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pasword" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Zadatak_52.dbo.vwOrder' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vwOrder">
+          <Key>
+            <PropertyRef Name="CakeID" />
+            <PropertyRef Name="TotalPrice" />
+            <PropertyRef Name="OrderDate" />
+            <PropertyRef Name="NumberOfCakes" />
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="CakeListID" />
+          </Key>
+          <Property Name="CakeID" Type="int" Nullable="false" />
+          <Property Name="TotalPrice" Type="float" Nullable="false" />
+          <Property Name="OrderDate" Type="date" Nullable="false" />
+          <Property Name="NumberOfCakes" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="CakeListID" Type="int" Nullable="false" />
+          <Property Name="Bomba" Type="int" />
+          <Property Name="Cheese" Type="int" />
+          <Property Name="Dobos" Type="int" />
+          <Property Name="Kinder" Type="int" />
+          <Property Name="Lincer" Type="int" />
+          <Property Name="LjubavnoGnezdo" Type="int" />
+        </EntityType>
+        <Association Name="FK__tblOrder__CakeLi__05D8E0BE">
+          <End Role="tblCakeList" Type="Self.tblCakeList" Multiplicity="1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCakeList">
+              <PropertyRef Name="CakeListID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="CakeListID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOrder__UserID__04E4BC85">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Zadatak_52ModelStoreContainer">
+          <EntitySet Name="tblCake" EntityType="Self.tblCake" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCakeList" EntityType="Self.tblCakeList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrder" EntityType="Self.tblOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vwOrder" EntityType="Self.vwOrder" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vwOrder].[CakeID] AS [CakeID], 
+    [vwOrder].[TotalPrice] AS [TotalPrice], 
+    [vwOrder].[OrderDate] AS [OrderDate], 
+    [vwOrder].[NumberOfCakes] AS [NumberOfCakes], 
+    [vwOrder].[UserID] AS [UserID], 
+    [vwOrder].[CakeListID] AS [CakeListID], 
+    [vwOrder].[Bomba] AS [Bomba], 
+    [vwOrder].[Cheese] AS [Cheese], 
+    [vwOrder].[Dobos] AS [Dobos], 
+    [vwOrder].[Kinder] AS [Kinder], 
+    [vwOrder].[Lincer] AS [Lincer], 
+    [vwOrder].[LjubavnoGnezdo] AS [LjubavnoGnezdo]
+    FROM [dbo].[vwOrder] AS [vwOrder]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__tblOrder__CakeLi__05D8E0BE" Association="Self.FK__tblOrder__CakeLi__05D8E0BE">
+            <End Role="tblCakeList" EntitySet="tblCakeList" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOrder__UserID__04E4BC85" Association="Self.FK__tblOrder__UserID__04E4BC85">
+            <End Role="tblUser" EntitySet="tblUser" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Zadatak_52Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblCake">
+          <Key>
+            <PropertyRef Name="CakeID" />
+          </Key>
+          <Property Name="CakeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CakeName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Grown" Type="Boolean" />
+          <Property Name="Kids" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblCakeList">
+          <Key>
+            <PropertyRef Name="CakeListID" />
+          </Key>
+          <Property Name="CakeListID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LjubavnoGnezdo" Type="Int32" />
+          <Property Name="Lincer" Type="Int32" />
+          <Property Name="Cheese" Type="Int32" />
+          <Property Name="Dobos" Type="Int32" />
+          <Property Name="Bomba" Type="Int32" />
+          <Property Name="Kinder" Type="Int32" />
+          <NavigationProperty Name="tblOrders" Relationship="Self.FK__tblOrder__CakeLi__05D8E0BE" FromRole="tblCakeList" ToRole="tblOrder" />
+        </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="CakeID" />
+          </Key>
+          <Property Name="CakeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TotalPrice" Type="Double" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumberOfCakes" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="CakeListID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblCakeList" Relationship="Self.FK__tblOrder__CakeLi__05D8E0BE" FromRole="tblOrder" ToRole="tblCakeList" />
+          <NavigationProperty Name="tblUser" Relationship="Self.FK__tblOrder__UserID__04E4BC85" FromRole="tblOrder" ToRole="tblUser" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumberOfOrders" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pasword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblOrders" Relationship="Self.FK__tblOrder__UserID__04E4BC85" FromRole="tblUser" ToRole="tblOrder" />
+        </EntityType>
+        <EntityType Name="vwOrder">
+          <Key>
+            <PropertyRef Name="CakeID" />
+            <PropertyRef Name="TotalPrice" />
+            <PropertyRef Name="OrderDate" />
+            <PropertyRef Name="NumberOfCakes" />
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="CakeListID" />
+          </Key>
+          <Property Name="CakeID" Type="Int32" Nullable="false" />
+          <Property Name="TotalPrice" Type="Double" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumberOfCakes" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="CakeListID" Type="Int32" Nullable="false" />
+          <Property Name="Bomba" Type="Int32" />
+          <Property Name="Cheese" Type="Int32" />
+          <Property Name="Dobos" Type="Int32" />
+          <Property Name="Kinder" Type="Int32" />
+          <Property Name="Lincer" Type="Int32" />
+          <Property Name="LjubavnoGnezdo" Type="Int32" />
+        </EntityType>
+        <Association Name="FK__tblOrder__CakeLi__05D8E0BE">
+          <End Role="tblCakeList" Type="Self.tblCakeList" Multiplicity="1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCakeList">
+              <PropertyRef Name="CakeListID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="CakeListID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblOrder__UserID__04E4BC85">
+          <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblCakes" EntityType="Self.tblCake" />
+          <EntitySet Name="tblCakeLists" EntityType="Self.tblCakeList" />
+          <EntitySet Name="tblOrders" EntityType="Self.tblOrder" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <EntitySet Name="vwOrders" EntityType="Self.vwOrder" />
+          <AssociationSet Name="FK__tblOrder__CakeLi__05D8E0BE" Association="Self.FK__tblOrder__CakeLi__05D8E0BE">
+            <End Role="tblCakeList" EntitySet="tblCakeLists" />
+            <End Role="tblOrder" EntitySet="tblOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblOrder__UserID__04E4BC85" Association="Self.FK__tblOrder__UserID__04E4BC85">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblOrder" EntitySet="tblOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Zadatak_52ModelStoreContainer" CdmEntityContainer="Entity">
+          <EntitySetMapping Name="tblCakes">
+            <EntityTypeMapping TypeName="Zadatak_52Model.tblCake">
+              <MappingFragment StoreEntitySet="tblCake">
+                <ScalarProperty Name="CakeID" ColumnName="CakeID" />
+                <ScalarProperty Name="CakeName" ColumnName="CakeName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Grown" ColumnName="Grown" />
+                <ScalarProperty Name="Kids" ColumnName="Kids" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCakeLists">
+            <EntityTypeMapping TypeName="Zadatak_52Model.tblCakeList">
+              <MappingFragment StoreEntitySet="tblCakeList">
+                <ScalarProperty Name="CakeListID" ColumnName="CakeListID" />
+                <ScalarProperty Name="LjubavnoGnezdo" ColumnName="LjubavnoGnezdo" />
+                <ScalarProperty Name="Lincer" ColumnName="Lincer" />
+                <ScalarProperty Name="Cheese" ColumnName="Cheese" />
+                <ScalarProperty Name="Dobos" ColumnName="Dobos" />
+                <ScalarProperty Name="Bomba" ColumnName="Bomba" />
+                <ScalarProperty Name="Kinder" ColumnName="Kinder" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrders">
+            <EntityTypeMapping TypeName="Zadatak_52Model.tblOrder">
+              <MappingFragment StoreEntitySet="tblOrder">
+                <ScalarProperty Name="CakeID" ColumnName="CakeID" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="NumberOfCakes" ColumnName="NumberOfCakes" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CakeListID" ColumnName="CakeListID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="Zadatak_52Model.tblUser">
+              <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="NumberOfOrders" ColumnName="NumberOfOrders" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Pasword" ColumnName="Pasword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwOrders">
+            <EntityTypeMapping TypeName="Zadatak_52Model.vwOrder">
+              <MappingFragment StoreEntitySet="vwOrder">
+                <ScalarProperty Name="CakeID" ColumnName="CakeID" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="NumberOfCakes" ColumnName="NumberOfCakes" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CakeListID" ColumnName="CakeListID" />
+                <ScalarProperty Name="Bomba" ColumnName="Bomba" />
+                <ScalarProperty Name="Cheese" ColumnName="Cheese" />
+                <ScalarProperty Name="Dobos" ColumnName="Dobos" />
+                <ScalarProperty Name="Kinder" ColumnName="Kinder" />
+                <ScalarProperty Name="Lincer" ColumnName="Lincer" />
+                <ScalarProperty Name="LjubavnoGnezdo" ColumnName="LjubavnoGnezdo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
